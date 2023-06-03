@@ -1,8 +1,5 @@
 @isset($all)
 
-@dd($all)
-@foreach($all as $persone)
-{{ $$persone }}
-@endforeach
+@php echo $all @endphp
 
 @endisset

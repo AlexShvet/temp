@@ -8,37 +8,28 @@ use App\Models\Phone;
 use App\Models\social_media;
 use App\Models\User;
 
+
 class MainPageController extends Controller
 {
     public function index()
     {
-        //$avatar = Avatar::find(88);dd($avatar->users);
-        $user = User::find(1);dd($user->avatars);
-        //$email = Email::find(59);dd($email->users);
-        /*
-        $avatar = Avatar::all();
-        $email = Email::all();
-        $phone = Phone::all();
-        $socialMedia = social_media::all();
-        $user = User::all();
-
-         $all[] = $avatar->toArray();
-        $all[] = $email->toArray();
-        $all[] = $phone->toArray();
-        $all[] = $socialMedia->toArray();
-        $all[] = $user->toArray();
         
-        $all[] = $avatar->toJson();
-        $all[] = $email->toJson();
-        $all[] = $phone->toJson();
-        $all[] = $socialMedia->toJson();
-        $all[] = $user->toJson();
+        $user = User::paginate(10)->toArray();
+        $social_media = social_media::paginate(10)->toArray();
+        $phone = Phone::paginate(10)->toArray();
+        $email = Email::paginate(10)->toArray();
+        $avatar = Avatar::paginate(10)->toArray();
         
-        //dd($all[1]);
-       
-        foreach($all as $value){
-dd($value);
+        for ($i=0; $i < 10; $i++) { 
+            $all[] = $user['data'][$i];
+            $all[] = $social_media['data'][$i];
+            $all[] = $phone['data'][$i];
+            $all[] = $email['data'][$i];
+            $all[] = $avatar['data'][$i];
         }
-        return view('all', ['all' => $finaledJson]);*/
+        $finaledJson = json_encode($all);
+        //$finaledJson = str_replace(',', ',<br>', $finaledJson);// для себя, что б удобнее проверять
+      
+        return view('all', ['all' => $finaledJson]);
     }
 }
